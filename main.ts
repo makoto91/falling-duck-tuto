@@ -1,51 +1,262 @@
-
-scene.setBackgroundColor(7)
+scene.setBackgroundColor(9)
 let mySprite = sprites.create(img`
-    . . . . . . . . . . . . . . . .
-    . . . . . . . . . . b 5 b . . .
-    . . . . . . . . . b 5 b . . . .
-    . . . . . . b b b b b b . . . .
-    . . . . . b b 5 5 5 5 5 b . . .
-    . b b b b b 5 5 5 5 5 5 5 b . .
-    . b d 5 b 5 5 5 5 5 5 5 5 b . .
-    . . b 5 5 b 5 d 1 f 5 d 4 f . .
-    . . b d 5 5 b 1 f f 5 4 4 c . .
-    b b d b 5 5 5 d f b 4 4 4 4 4 b
-    b d d c d 5 5 b 5 4 4 4 4 4 b .
-    c d d d c c b 5 5 5 5 5 5 5 b .
-    c b d d d d d 5 5 5 5 5 5 5 b .
-    . c d d d d d d 5 5 5 5 5 d b .
-    . . c b d d d d d 5 5 5 b b . .
-    . . . c c c c c c c c b b . . .
+    . . . . . . . . 2 2 2 2 . . . .
+    . . . . . . . . . . 2 2 2 . . .
+    . . . . . . . . . . 1 1 1 . . .
+    . . . . . . . . . . 1 4 1 1 . .
+    . . . . . . . . . . 1 1 1 5 5 .
+    . . . . . . . . . 1 1 1 . . . .
+    . 1 1 1 . . . . 1 1 1 1 1 . . .
+    1 1 d 1 1 . 1 1 d d 1 1 1 . . .
+    1 1 d d 1 1 1 d d 1 1 1 1 . . .
+    1 1 1 d d d d d 1 1 1 1 1 . . .
+    . 1 1 1 1 1 1 1 1 1 1 1 1 . . .
+    . . 1 1 1 1 1 1 1 1 1 1 . . . .
+    . . . . . . 1 1 1 1 1 . . . . .
+    . . . . . . 1 1 1 1 . . . . . .
+    . . . . . . . 4 . 4 4 4 . . . .
+    . . . . . . . 4 4 . . . . . . .
 `, SpriteKind.Player)
-
-// const flipped = mySprite.image.clone();
-// flipped.flipX()
-// mySprite.setImage(flipped)
 mySprite.x = 20
-mySprite.ay = 200
+mySprite.ay = 300 // vertical acceleration
 
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.vy = -100
 })
 
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, 
+
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile,
 function (sprite: Sprite, otherSprite: Sprite) {
     game.over()
 })
 
 game.onUpdate(function () {
-    if(mySprite.top < 0 || mySprite.bottom > 120){
-        game.over();
-    }
+    if (mySprite.top < 0 || mySprite.bottom > 120)
+        game.over()
+    info.changeScoreBy(1)
 })
 
 game.onUpdateInterval(1000, function () {
-    let projectile = sprites.createProjectileFromSide(img`
-        3 3 3 3 3 3 3 3
-        3 3 3 3 3 3 3 3
-        3 3 3 3 3 3 3 3
-        3 3 3 3 3 3 3 3
-    `, -100, 0);
-    projectile.y = 60;
+    let projectile = sprites
+        .createProjectileFromSide(img`
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c a c c c c c c c c c c c
+            c c c c a a c c c c c c c c c c
+            c c c c c a a a c c c c c c c c
+            c c c c c c c c c a c c c c c c
+            c c c c c c c c c c a c c c c c
+            c c c c c c c c c c c a c c c c
+            c c c c c c c c c c c a c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c a c c c c c c c
+            c c c c c a a a a a a c c c c c
+            c c c c c c a a c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c 7 c c c c c c c c c c c c c
+            c c 7 c c c c c c c c c c c 7 c
+            c 7 c 7 7 c c c c c c c c c c 7
+            c 7 c 7 7 7 7 7 7 c c c c c c 7
+            c 7 7 7 c c c c c 7 7 7 7 7 7 7
+            c e e c c e e e e 7 7 7 e e e e
+            e e e e e e . e e e e e e e . e
+            . e . . . . . e e e . . e . . .
+            . . . . . . . . . e . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            e e . . . . . . . e e . . . . .
+            e e e e e e e e e e e e e e e e
+            e e e e e e e e e e 7 7 e e e e
+            c c e 7 7 e c e e c e e e e e 7
+            c c e 7 7 7 c e e e 7 c c c 7 7
+            c c 7 7 c c 7 7 7 7 c 7 7 7 7 7
+            c c c c c c c c c c c c 7 7 c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            c c c c c c c c c c c c c c c c
+            . . . . . . . . . . . . . . . .
+        `, -100, 0)
+    projectile.y = Math.randomRange(50, 70)
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
